@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
 import './Dashboard.css';
@@ -7,27 +8,45 @@ const Dashboard = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() === '') return;
 
     const userMessage = { sender: 'user', text: input };
     setMessages([...messages, userMessage]);
 
-    const botResponse = getBotResponse(input);
+    const botResponse = await getBotResponse(input);
     const botMessage = { sender: 'bot', text: botResponse };
     setMessages([...messages, userMessage, botMessage]);
     
     setInput('');
   };
 
-  const getBotResponse = (input) => {
-    const responses = {
-      'hi': 'Hello! How can I assist you today?',
-      'how are you': 'I am just a bot, but I am here to help you!',
-      'what is your name': 'I am ChatGPT, your virtual assistant.'
+  const getBotResponse = async (input) => {
+    const api_key = '';
+    const api_url = 'https://api.openai.com/v1/chat/completions';
+    
+    const requestData = {
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: input }],
+      temperature: 0.7,
+      max_tokens: 2048,
+      top_p: 1
     };
 
-    return responses[input.toLowerCase()] || "I'm sorry, I don't understand that.";
+    try {
+      const response = await axios.post(api_url, requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${api_key}`
+        }
+      });
+      
+      const botMessage = response.data.choices[0].message.content;
+      return botMessage;
+    } catch (error) {
+      console.error('Error fetching bot response:', error);
+      return "I'm sorry, I don't understand that.";
+    }
   };
 
   const handleLogout = () => {
