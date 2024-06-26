@@ -20,7 +20,6 @@
 
 .login-logo img {
   max-width: 100px;
-  margin-bottom: 20px;
 }
 
 .form-group {
@@ -35,9 +34,11 @@
 
 .form-group input {
   width: 100%;
+  max-width: 100%;
   padding: 10px;
   border: none;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
 button {

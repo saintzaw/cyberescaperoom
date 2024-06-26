@@ -1,5 +1,6 @@
-// src/components/Dashboard.js
 import React, { useState } from 'react';
+import Typist from 'react-typist';
+import 'react-typist/dist/Typist.css';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -21,12 +22,12 @@ const Dashboard = () => {
 
   const getBotResponse = (input) => {
     const responses = {
-      'Explain quantum computing in simple terms': 'Quantum computing is a type of computing that takes advantage of the strange ability of subatomic particles to exist in more than one state at any time.',
-      'Got any creative ideas for a 10 year old’s birthday?': 'How about a treasure hunt, a science-themed party, or an outdoor adventure?',
-      'How do I make an HTTP request in Javascript?': 'You can use the Fetch API or XMLHttpRequest for making HTTP requests in JavaScript.'
+      'hi': 'Hello! How can I assist you today?',
+      'how are you': 'I am just a bot, but I am here to help you!',
+      'what is your name': 'I am ChatGPT, your virtual assistant.'
     };
 
-    return responses[input] || "I'm sorry, I don't understand that.";
+    return responses[input.toLowerCase()] || "I'm sorry, I don't understand that.";
   };
 
   const handleLogout = () => {
@@ -34,6 +35,12 @@ const Dashboard = () => {
     console.log("User logged out");
     // For example, clearing user session data, redirecting to login page, etc.
     window.location.href = '/login'; // Redirect to login page
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSend();
+    }
   };
 
   return (
@@ -52,12 +59,18 @@ const Dashboard = () => {
         </nav>
       </aside>
       <main className="main-content">
-        <h1>ChatGPT</h1>
+        <h1>KrasnoAI</h1>
         <div className="chat-container">
           <div className="chat-box">
             {messages.map((message, index) => (
               <div key={index} className={`chat-message ${message.sender}`}>
-                {message.text}
+                {message.sender === 'bot' ? (
+                  <Typist avgTypingDelay={10} stdTypingDelay={5} cursor={{ show: false }}>
+                    {message.text}
+                  </Typist>
+                ) : (
+                  message.text
+                )}
               </div>
             ))}
           </div>
@@ -66,6 +79,7 @@ const Dashboard = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="Type a message..."
             />
             <button onClick={handleSend}>Send</button>
