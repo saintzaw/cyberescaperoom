@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  justify-content: space-between;
 }
 
 .sidebar-header {
@@ -124,4 +125,9 @@ body {
   cursor: pointer;
   width: 20%; /* Ensures the input takes up the full available width */
   max-width: 20%; /* Ensures it doesn't exceed the container's width */
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
 }
