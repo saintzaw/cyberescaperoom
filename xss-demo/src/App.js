@@ -20,7 +20,7 @@ function App() {
             placeholder="Search..."
           />
         </form>
-        {/*xss payload: <img src="x" onerror="alert('XSS')" />*/}
+        {/*xss payload: <img src="x" onerror="alert('deactivate')" />*/}
         <p>Search Results for: <span dangerouslySetInnerHTML={{ __html: query }} /></p>
       </header>
     </div>

@@ -7,9 +7,9 @@ const path = require('path');
 const app = express();
 
 app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
 }));
 
 app.use(express.json());
@@ -21,19 +21,17 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "root",
-    database: "test_db",
+    database: "chat_db",
 });
 
 const router = express.Router();
 
 router.post("/getdetails", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+    const query = req.body.query;
 
-    console.log(username);
-    console.log(password);
+    console.log(query);
 
-    db.query(`SELECT * FROM users WHERE username='${username}' AND password='${password}'`, [username, password], (err, result) => {
+    db.query(`SELECT * FROM chat WHERE message LIKE '%${query}%'`, (err, result) => {
         if (err) {
             res.status(500).send({ message: "Internal server error" });
             console.error(err);
@@ -41,7 +39,7 @@ router.post("/getdetails", (req, res) => {
             if (result.length > 0) {
                 res.status(200).send(result);
             } else {
-                res.status(401).send({ message: "Wrong username/password combination!" });
+                res.status(401).send({ message: "No matching messages found!" });
             }
         }
     });
@@ -52,5 +50,6 @@ app.use("/users", router);
 app.listen(3001, () => {
     console.log("Server has started on port 3001");
 });
+
 
 

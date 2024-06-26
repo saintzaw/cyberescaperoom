@@ -3,23 +3,21 @@ import axios from 'axios';
 URL = 'http://localhost:3001/users/getdetails';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [query, setQuery] = useState('');
   const [error, setError] = useState('');
-  const [userDetails, setUserDetails] = useState(null);
+  const [chatDetails, setChatDetails] = useState(null);
 
   const handleCheck = async () => {
     try {
       const response = await axios.post(URL, {
-        username,
-        password,
+        query,
       });
 
-      setUserDetails(response.data);
+      setChatDetails(response.data);
       setError('');
     } catch (err) {
-      setUserDetails(null);
-      setError('Invalid credentials. Please try again!');
+      setChatDetails(null);
+      setError('No matching messages found!');
     }
   };
 
@@ -47,7 +45,7 @@ const App = () => {
     },
     inputContainer: {
       marginBottom: '15px',
-      width: '400px ',
+      width: '400px',
       alignItems: 'center',
       display: 'flex',
       flexDirection: 'column',
@@ -82,7 +80,7 @@ const App = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '50px', 
+      height: '50px',
     },
     error: {
       color: 'red',
@@ -120,26 +118,17 @@ const App = () => {
       <h1 style={darkTheme.header}>Krasno SQL Injection</h1>
       <h2 style={darkTheme.header}>always true</h2>
       <div style={darkTheme.inputContainer}>
-        <label style={darkTheme.label}>Username:</label>
+        <label style={darkTheme.label}>Query:</label>
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={darkTheme.input}
-        />
-      </div>
-      <div style={darkTheme.inputContainer}>
-        <label style={darkTheme.label}>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           style={darkTheme.input}
         />
       </div>
       <div style={darkTheme.buttonContainer}>
         <button style={darkTheme.button} onClick={handleCheck}>
-          Get User Details
+          Get Chat Details
         </button>
       </div>
       {error && (
@@ -147,21 +136,23 @@ const App = () => {
           <p style={darkTheme.error}>{error}</p>
         </div>
       )}
-      {userDetails && (
+      {chatDetails && (
         <div style={darkTheme.userDetails}>
-          <h2>User Details</h2>
+          <h2>Chat Details</h2>
           <table style={darkTheme.table}>
             <thead>
               <tr>
-                <th style={darkTheme.th}>Username</th>
-                <th style={darkTheme.th}>Password</th>
+                <th style={darkTheme.th}>ID</th>
+                <th style={darkTheme.th}>Agent</th>
+                <th style={darkTheme.th}>Message</th>
               </tr>
             </thead>
             <tbody>
-              {userDetails.map((user, index) => (
-                <tr key={user.id} style={index % 2 === 0 ? darkTheme.evenRow : darkTheme.oddRow}>
-                  <td style={darkTheme.td}>{user.username}</td>
-                  <td style={darkTheme.td}>{user.password}</td>
+              {chatDetails.map((chat, index) => (
+                <tr key={chat.ID} style={index % 2 === 0 ? darkTheme.evenRow : darkTheme.oddRow}>
+                  <td style={darkTheme.td}>{chat.ID}</td>
+                  <td style={darkTheme.td}>{chat.Agent}</td>
+                  <td style={darkTheme.td}>{chat.Message}</td>
                 </tr>
               ))}
             </tbody>
