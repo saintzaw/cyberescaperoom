@@ -22,7 +22,6 @@ const Dashboard = () => {
   };
 
   const getBotResponse = async (input) => {
-    //sk-proj-ZHzuHjf3XXO6YDb0oJMtT3BlbkFJNqAlf078x2fbkupWnotY
     const api_key = '';
     const api_url = 'https://api.openai.com/v1/chat/completions';
     
