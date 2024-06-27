@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (username === 'agent' && password === 'ilovekrasno123') {
+    if (username === 'agent' && password === 'ilovekrasnovia123') {
       navigate('/dashboard');
     } else {
       alert('Invalid credentials');
@@ -49,8 +49,8 @@ const Login = () => {
         </p>
       </div>
       <div style={{ display: 'none' }}>
-        {/* Hardcoded credentials: username: admin, password: ilovekrasno123 */}
-        <p>Try me: ilovekrasno123</p>
+        {/* Hardcoded credentials: username: agent, password: ilovekrasnovia123 */}
+        <p>Hi agent, here's your password: ilovekrasnovia123</p>
       </div>
     </div>
   );
