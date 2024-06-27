@@ -24,6 +24,7 @@ const Login = () => {
           <img src="/cia-logo.png" alt="CIA Logo" />
         </div>
         <h2>KrasnoAI Login</h2>
+        <h3>For agents of Krasnovia</h3>
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label>Agent ID</label>
