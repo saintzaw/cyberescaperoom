@@ -12,10 +12,10 @@
 /build
 
 # models
-.gguf
+*gguf
 
 # secrets
-.secret.json
+/secret.json
 
 # misc
 .DS_Store
