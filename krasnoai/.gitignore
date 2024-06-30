@@ -11,6 +11,12 @@
 # production
 /build
 
+# models
+.gguf
+
+# secrets
+.secret.json
+
 # misc
 .DS_Store
 .env.local
